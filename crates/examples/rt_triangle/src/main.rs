@@ -4,6 +4,7 @@ use app::vulkan::utils::*;
 use app::{vulkan::*, BaseApp};
 use app::{App, ImageAndView};
 use std::mem::size_of;
+use std::path::PathBuf;
 use std::time::Duration;
 
 const WIDTH: u32 = 1024;
@@ -294,17 +295,17 @@ fn create_pipeline(context: &Context) -> Result<PipelineRes> {
     // Shaders
     let shaders_create_info = [
         RayTracingShaderCreateInfo {
-            source: &include_bytes!("../shaders/raygen.rgen.spv")[..],
+            source: &compile_to_spv_bytes(PathBuf::from("./crates/examples/rt_triangle/shaders/raygen.rgen"), vk::ShaderStageFlags::RAYGEN_KHR),
             stage: vk::ShaderStageFlags::RAYGEN_KHR,
             group: RayTracingShaderGroup::RayGen,
         },
         RayTracingShaderCreateInfo {
-            source: &include_bytes!("../shaders/miss.rmiss.spv")[..],
+            source: &compile_to_spv_bytes(PathBuf::from("./crates/examples/rt_triangle/shaders/miss.rmiss"), vk::ShaderStageFlags::MISS_KHR),
             stage: vk::ShaderStageFlags::MISS_KHR,
             group: RayTracingShaderGroup::Miss,
         },
         RayTracingShaderCreateInfo {
-            source: &include_bytes!("../shaders/closesthit.rchit.spv")[..],
+            source: &compile_to_spv_bytes(PathBuf::from("./crates/examples/rt_triangle/shaders/closesthit.rchit"), vk::ShaderStageFlags::CLOSEST_HIT_KHR),
             stage: vk::ShaderStageFlags::CLOSEST_HIT_KHR,
             group: RayTracingShaderGroup::ClosestHit,
         },

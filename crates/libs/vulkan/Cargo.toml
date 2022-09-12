@@ -12,3 +12,4 @@ ash = { version = "0.37", features = ["linked"] }
 ash-window = "0.10"
 raw-window-handle = "0.4"
 gpu-allocator = { version = "0.18", default-features = false, features = ["vulkan"] }
+shaderc = "0.8"
